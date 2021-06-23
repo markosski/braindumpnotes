@@ -1,4 +1,4 @@
-package note
+package notes
 
 import (
 	"fmt"
@@ -11,25 +11,24 @@ const NOTE_FORMAT_EXT_TXT = "TXT"
 type InputNote struct {
 	Name    string `json:"name"`
 	Content string `json:"content"`
-	Format  string `json:"format"`
 }
 
 type UpdateNote struct {
-	Name    string  `json:"name"`
+	Name    *string `json:"name,omitempty"`
 	Content *string `json:"content,omitempty"`
 }
 
 type Note struct {
+	Id      string `json:"id"`
 	Name    string `json:"name"`
 	Content string `json:"content"`
-	Format  string `json:"format"`
 }
 
 type NoteStore interface {
 	List() ([]Note, error)
 	Get(name string) (Note, error)
 	Create(newNote InputNote) error
-	Update(updateNote UpdateNote) error
+	Update(name string, updateNote UpdateNote) error
 	Delete(name string) error
 }
 
